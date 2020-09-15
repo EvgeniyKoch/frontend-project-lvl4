@@ -19,11 +19,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:hexlet-components/projects-frontend-l4-server.git"
+    "url": "https://github.com/EvgeniyKoch/frontend-project-lvl4.git "
   },
-  "author": "Kirill Mokevnin",
+  "author": "EvgKoch",
   "license": "ISC",
-  "homepage": "",
+  "homepage": "https://github.com/EvgeniyKoch/frontend-project-lvl4/blob/master/README.md",
   "dependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.10.5",
