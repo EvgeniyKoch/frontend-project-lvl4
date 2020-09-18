@@ -1,19 +1,36 @@
 // @ts-check
+import { render } from 'react-dom';
+import { configureStore } from '@reduxjs/toolkit';
+import gon from 'gon';
+
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+
+import reducer from './data/reducer';
 
 import '../assets/application.scss';
 
 // import faker from 'faker';
-import gon from 'gon';
 // import cookies from 'js-cookie';
 // import io from 'socket.io-client';
-import app from './App';
+import renderApp from './init';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-app(gon.channels);
-console.log('it works!');
-console.log('gon', gon);
+const preloadedState = {
+  channels: gon.channels,
+  currentChannelId: gon.currentChannelId,
+  messages: gon.messages,
+};
+
+const store = configureStore({
+  reducer,
+  preloadedState,
+});
+
+const dom = renderApp(store);
+const root = document.getElementById('chat');
+
+render(dom, root);
