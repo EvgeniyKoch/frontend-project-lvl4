@@ -2,7 +2,6 @@
 import { render } from 'react-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import gon from 'gon';
-
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -10,10 +9,8 @@ import reducer from './data/reducer';
 
 import '../assets/application.scss';
 
-// import faker from 'faker';
-// import cookies from 'js-cookie';
 // import io from 'socket.io-client';
-import renderApp from './init';
+import renderChats from './init';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -30,7 +27,7 @@ const store = configureStore({
   preloadedState,
 });
 
-const dom = renderApp(store);
+const chats = renderChats(store);
 const root = document.getElementById('chat');
 
-render(dom, root);
+render(chats, root);

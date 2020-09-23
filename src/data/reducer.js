@@ -1,9 +1,15 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import sendMessage from './actions';
 
-const initialState = {
-  channels: [],
-  currentChannelId: null,
-  messages: '',
-};
+const messageSlice = createSlice({
+  name: 'message',
+  initialState: [],
+  reducers: {},
+  extraReducers: {
+    [sendMessage.fulfilled]: (state, action) => {
+      state.messages.push(action.payload);
+    },
+  },
+});
 
-export default createReducer(initialState, {});
+export default messageSlice.reducer;

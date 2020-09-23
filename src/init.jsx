@@ -1,10 +1,19 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
+import cookies from 'js-cookie';
+import faker from 'faker';
+import App from './components/App';
+import UserName from './data/context';
 
-import App from './scenes/App';
+export default (store) => {
+  const username = cookies.get('username') || faker.internet.userName();
+  cookies.set('username', username);
 
-export default (store) => (
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
+  return (
+    <UserName.Provider value={{ username }}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </UserName.Provider>
+  );
+};
