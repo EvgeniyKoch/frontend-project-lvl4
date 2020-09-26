@@ -1,6 +1,6 @@
-// @ts-check
 import { render } from 'react-dom';
 import { configureStore } from '@reduxjs/toolkit';
+import io from 'socket.io-client';
 import gon from 'gon';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -9,7 +9,6 @@ import reducer from './data/reducer';
 
 import '../assets/application.scss';
 
-// import io from 'socket.io-client';
 import renderChats from './init';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -27,7 +26,8 @@ const store = configureStore({
   preloadedState,
 });
 
-const chats = renderChats(store);
+const socket = io();
+const chats = renderChats(store, socket);
 const root = document.getElementById('chat');
 
 render(chats, root);

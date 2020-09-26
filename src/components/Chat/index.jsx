@@ -6,14 +6,25 @@ import {
 import { useFormik } from 'formik';
 
 import Context from '../../data/context';
-import sendMessage from '../../data/actions';
+import { sendMessage } from '../../data/actions';
+import { titleInitials, getColors } from './utils';
 
 import './styles.scss';
 
 const Chat = () => {
   const { username } = useContext(Context);
   const currentChannelId = useSelector((state) => state.currentChannelId);
+  const messages = useSelector((state) => state.messages);
+  const endMessage = React.useRef(null);
   const dispatch = useDispatch();
+
+  const currentChannelMessages = messages.filter((message) => message.channelId === currentChannelId);
+
+  const scrollToBottom = () => {
+    endMessage.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  React.useEffect(scrollToBottom, [currentChannelMessages]);
 
   const formik = useFormik({
     initialValues: {
@@ -21,7 +32,15 @@ const Chat = () => {
     },
     onSubmit: (values) => {
       const { message } = values;
-      dispatch(sendMessage({ data: { currentChannelId, message, username } }));
+      dispatch(sendMessage({
+        data: {
+          attributes: {
+            channelId: currentChannelId,
+            message,
+            username,
+          },
+        },
+      }));
       formik.resetForm({ message: '' });
     },
   });
@@ -29,8 +48,31 @@ const Chat = () => {
   return (
     <>
       <Row>
-        <Col className="chat-messages">
-          Messages
+        <Col
+          className="chat-messages"
+        >
+          {currentChannelMessages?.map(({ username, message, id }) => (
+            <Row key={id}>
+              <div
+                className="message-wrapper"
+              >
+                <div
+                  style={{ backgroundColor: getColors(username), borderRadius: '50%' }}
+                  className="message-name"
+                >
+                  {titleInitials(username)}
+                </div>
+                <div>
+                  <p style={{ color: getColors(username) }}>
+                    {username}
+                    :
+                  </p>
+                  <p style={{ color: 'dodgerblue' }}>{message}</p>
+                </div>
+              </div>
+            </Row>
+          ))}
+          <div ref={endMessage} />
         </Col>
       </Row>
       <Row>

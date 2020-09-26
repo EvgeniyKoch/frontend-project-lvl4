@@ -1,4 +1,21 @@
 .chat-messages {
   height: 80vh;
+  overflow: auto;
   border-left: 1px solid lightgrey;
+}
+
+.message-wrapper {
+  display: flex;
+  p {
+    margin-bottom: 0px;
+  }
+}
+
+.message-name {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
 }

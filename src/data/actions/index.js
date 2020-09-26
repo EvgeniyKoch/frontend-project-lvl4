@@ -1,15 +1,12 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../../routes';
 
-// const addMessage = createAction('ADD_MESSAGE');
+export const addMessage = createAction('message/add');
 
-const sendMessage = createAsyncThunk(
-  'message/add',
+export const sendMessage = createAsyncThunk(
+  'message/send',
   async (payload) => {
-    const response = await axios.post(routes.channelMessagesPath(payload.currentChannelId), payload);
-    return response.data;
+    await axios.post(routes.channelMessagesPath(payload.data.attributes.channelId), payload);
   },
 );
-
-export default sendMessage;

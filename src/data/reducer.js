@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import sendMessage from './actions';
+import { addMessage } from './actions';
 
 const messageSlice = createSlice({
   name: 'message',
   initialState: [],
   reducers: {},
-  extraReducers: {
-    [sendMessage.fulfilled]: (state, action) => {
-      state.messages.push(action.payload);
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(addMessage, (state, action) => {
+        state.messages.push(action.payload);
+      });
   },
 });
 
