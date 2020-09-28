@@ -5,12 +5,12 @@ import faker from 'faker';
 
 import App from './components/App';
 import UserName from './data/context';
-import { addMessage } from './data/actions';
+import { actions } from './data/slice';
 
 export default (store, socket) => {
   socket.on('newMessage', (payload) => {
     const { data: { attributes } } = payload;
-    store.dispatch(addMessage(attributes));
+    store.dispatch(actions.addMessage(attributes));
   });
 
   const username = cookies.get('username') || faker.name.findName();

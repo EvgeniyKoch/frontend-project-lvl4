@@ -5,7 +5,7 @@ import gon from 'gon';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import reducer from './data/reducer';
+import reducer from './data/slice';
 
 import '../assets/application.scss';
 
@@ -19,6 +19,11 @@ const preloadedState = {
   channels: gon.channels,
   currentChannelId: gon.currentChannelId,
   messages: gon.messages,
+  modal: {
+    isOpen: false,
+    type: null,
+    extra: null,
+  },
 };
 
 const store = configureStore({

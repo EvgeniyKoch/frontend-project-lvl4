@@ -1,0 +1,59 @@
+import * as React from 'react';
+import { Button, Form, FormGroup, Modal } from 'react-bootstrap';
+import { useFormik } from 'formik';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { actions } from '../../data/slice';
+import { changeChannelName } from '../../data/actions';
+
+const Create = () => {
+  const { isOpen } = useSelector((state) => state.modal);
+  const { channelId } = useSelector((state) => state.modal.extra);
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    dispatch(actions.closeModal());
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+    },
+    onSubmit: (values) => {
+      const { name } = values;
+      dispatch(changeChannelName({
+        data: {
+          attributes: { channelId, name },
+        },
+      }));
+      formik.resetForm();
+      closeModal();
+    },
+  });
+
+  return (
+    <Modal show={isOpen} onHide={closeModal}>
+      <form onSubmit={formik.handleSubmit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Rename channel</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FormGroup controlId="formControlsText">
+            <Form.Control
+              name="name"
+              type="text"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+            />
+          </FormGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={closeModal} variant="secondary">Close</Button>
+          <Button variant="primary" type="submit">Save name</Button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+  );
+};
+
+export default Create;

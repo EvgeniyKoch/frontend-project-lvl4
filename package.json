@@ -17,6 +17,11 @@
     "start": "dist/bin/slack.js",
     "postinstall": "npm run build"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/EvgeniyKoch/frontend-project-lvl4.git "
@@ -74,6 +79,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@types/jest": "^26.0.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
@@ -87,6 +94,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "husky": "^4.3.0",
     "jest": "^26.1.0",
     "jest-cli": "^26.1.0",
     "jsdoc": "^3.6.5",
