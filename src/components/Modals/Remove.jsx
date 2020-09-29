@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { Button, Form, FormGroup, Modal } from 'react-bootstrap';
-import { useFormik } from 'formik';
+import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import { actions } from '../../data/slice';
-import { deleteChannel } from '../../data/actions';
+import routes from '../../routes';
+import Context from '../../data/context';
 
 const Remove = () => {
+  const { rollbar } = React.useContext(Context);
+  const [loading, setLoading] = React.useState(false);
   const { isOpen } = useSelector((state) => state.modal);
   const { channelId } = useSelector((state) => state.modal.extra);
   const dispatch = useDispatch();
@@ -15,34 +18,35 @@ const Remove = () => {
     dispatch(actions.closeModal());
   };
 
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-    },
-    onSubmit: (values) => {
-      const { name } = values;
-      dispatch(deleteChannel({
-        data: {
-          attributes: { channelId },
-        },
-      }));
-      formik.resetForm();
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const url = routes.channelPath(channelId);
+    const data = { data: { attributes: { channelId } } };
+    setLoading(true);
+    try {
+      await axios.delete(url, data);
+    } catch (e) {
+      console.log(e);
+      rollbar.error(e);
+      dispatch(actions.showToast(true));
+    } finally {
+      setLoading(false);
       closeModal();
-    },
-  });
+    }
+  };
 
   return (
     <Modal show={isOpen} onHide={closeModal}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={onSubmit}>
         <Modal.Header closeButton>
           <Modal.Title>Remove channel</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Are you sure?
         </Modal.Body>
-        <Modal.Footer style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button onClick={closeModal} variant="secondary">Cancel</Button>
-          <Button variant="primary" type="submit">Remove</Button>
+        <Modal.Footer className="modal-footer">
+          <Button disabled={loading} onClick={closeModal} variant="secondary">Cancel</Button>
+          <Button disabled={loading} variant="primary" type="submit">Remove</Button>
         </Modal.Footer>
       </form>
     </Modal>

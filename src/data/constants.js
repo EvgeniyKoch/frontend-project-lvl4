@@ -1,5 +1,4 @@
-const CREATE_CHANNEL = 'createChannel';
-const RENAME_CHANNEL = 'renameChannel';
-const REMOVE_CHANNEL = 'removeChannel';
-
-export { CREATE_CHANNEL, RENAME_CHANNEL, REMOVE_CHANNEL };
+export const NEW_MESSAGE = 'newMessage';
+export const NEW_CHANNEL = 'newChannel';
+export const RENAME_CHANNEL = 'renameChannel';
+export const REMOVE_CHANNEL = 'removeChannel';

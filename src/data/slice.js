@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { addChannel, changeChannelName, deleteChannel } from './actions';
-import { CREATE_CHANNEL, RENAME_CHANNEL, REMOVE_CHANNEL } from './constants';
-
 const chatSlice = createSlice({
   name: 'chat',
   initialState: null,
@@ -10,42 +7,37 @@ const chatSlice = createSlice({
     addMessage: (state, { payload }) => {
       state.messages.push(payload);
     },
+    addChannel: (state, { payload }) => {
+      state.channels.push(payload);
+    },
+    renameChannel: (state, { payload }) => {
+      const { id, name } = payload;
+      const channel = state.channels.find((c) => c.id === id);
+      channel.name = name;
+    },
+    removeChannel: (state, { payload }) => {
+      const { id } = payload;
+      state.messages = state.messages.filter((m) => m.channelId !== id);
+      state.channels = state.channels.filter((c) => c.id !== id);
+    },
     changeCurrentChannel: (state, { payload }) => {
       state.currentChannelId = payload;
     },
-    createChannels: (state) => {
+    openModal: (state, { payload }) => {
       state.modal.isOpen = true;
-      state.modal.type = CREATE_CHANNEL;
-    },
-    renameChannel: (state, { payload }) => {
-      state.modal.isOpen = true;
-      state.modal.type = RENAME_CHANNEL;
-      state.modal.extra = payload;
-    },
-    removeChannel: (state, { payload }) => {
-      state.modal.isOpen = true;
-      state.modal.type = REMOVE_CHANNEL;
-      state.modal.extra = payload;
+      state.modal.type = payload.type;
+      state.modal.extra = payload.data;
     },
     closeModal: (state) => {
       state.modal.isOpen = false;
       state.modal.type = null;
       state.modal.extra = null;
     },
-  },
-  extraReducers: {
-    [addChannel.fulfilled]: (state, { payload }) => {
-      state.channels.push(payload);
-    },
-    [changeChannelName.fulfilled]: (state, { payload }) => {
-      const { id, name } = payload;
-      const channel = state.channels.find((c) => c.id === id);
-      channel.name = name;
-    },
-    [deleteChannel.fulfilled]: (state, { payload }) => {
-
+    showToast: (state, { payload }) => {
+      state.toast.isOpen = payload;
     },
   },
+  extraReducers: {},
 });
 
 export const { actions } = chatSlice;

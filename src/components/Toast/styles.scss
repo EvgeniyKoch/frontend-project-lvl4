@@ -1,0 +1,13 @@
+.toast {
+  border-radius: 10px;
+  position: fixed;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toast-body {
+  background: lightcoral;
+  text-align: center;
+  color: wheat;
+}

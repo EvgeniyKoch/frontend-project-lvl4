@@ -1,9 +1,10 @@
 import { render } from 'react-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import io from 'socket.io-client';
-import gon from 'gon';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import gon from 'gon';
+import Rollbar from 'rollbar';
 
 import reducer from './data/slice';
 
@@ -24,7 +25,19 @@ const preloadedState = {
     type: null,
     extra: null,
   },
+  toast: {
+    isOpen: false,
+  },
 };
+
+const rollbar = new Rollbar({
+  accessToken: process.env.ROLLBAR_KEY,
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  payload: {
+    environment: process.env.NODE_ENV,
+  },
+});
 
 const store = configureStore({
   reducer,
@@ -32,7 +45,7 @@ const store = configureStore({
 });
 
 const socket = io();
-const chats = renderChats(store, socket);
+const chats = renderChats(store, socket, rollbar);
 const root = document.getElementById('chat');
 
 render(chats, root);

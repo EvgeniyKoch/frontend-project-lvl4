@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, ButtonGroup, Col, Dropdown, Row } from 'react-bootstrap';
 
 import { actions } from '../../data/slice';
+import { NEW_CHANNEL, REMOVE_CHANNEL, RENAME_CHANNEL } from '../../data/constants';
+
+import './style.scss';
 
 const Channels = () => {
   const channels = useSelector(((state) => state.channels));
@@ -13,24 +16,19 @@ const Channels = () => {
     dispatch(actions.changeCurrentChannel(channelId));
   };
 
-  const createChannels = () => {
-    dispatch(actions.createChannels());
-  };
-
-  const renameChannel = (channelId) => () => {
-    dispatch(actions.renameChannel({ channelId }));
-  };
-
-  const removeChannel = (channelId) => () => {
-    dispatch(actions.removeChannel({ channelId }));
+  const openModal = (type, channelId) => () => {
+    dispatch(actions.openModal({
+      type,
+      data: { channelId },
+    }));
   };
 
   return (
-    <div style={{ maxHeight: '80vh', overflow: 'auto' }}>
-      <Row style={{ marginBottom: '16px', alignItems: 'center' }}>
+    <div className="channels">
+      <Row className="channels-btn_add">
         <Col xs={8}>Channels</Col>
         <Col xs={4}>
-          <Button onClick={createChannels} variant="link">
+          <Button onClick={openModal(NEW_CHANNEL, null)} variant="link">
             +
           </Button>
         </Col>
@@ -41,10 +39,10 @@ const Channels = () => {
 
         return (
           <Row key={channel.id}>
-            <Col style={{ marginBottom: '10px' }}>
+            <Col className="channels-links">
               {!channel.removable && (
                 <Button
-                  style={{ width: '80%' }}
+                  className="channels-btns"
                   onClick={changeChannel(channel.id)}
                   variant={variantBtn}
                 >
@@ -52,20 +50,24 @@ const Channels = () => {
                 </Button>
               )}
               {channel.removable && (
-                <Dropdown key={channel.id} as={ButtonGroup} style={{ width: '100%', marginBottom: '10px' }}>
+                <Dropdown
+                  className="channels-dropdown"
+                  key={channel.id}
+                  as={ButtonGroup}
+                >
                   <Button
-                    style={{ width: '80%' }}
+                    className="channels-btns"
                     onClick={changeChannel(channel.id)}
                     variant={variantBtn}
                   >
                     {channel.name}
                   </Button>
-                  <Dropdown.Toggle style={{ textAlign: 'end' }} variant={variantBtn} />
+                  <Dropdown.Toggle className="channels-toggle" variant={variantBtn} />
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={renameChannel(channel.id)}>
+                    <Dropdown.Item onClick={openModal(RENAME_CHANNEL, channel.id)}>
                       Rename
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={removeChannel(channel.id)}>
+                    <Dropdown.Item onClick={openModal(REMOVE_CHANNEL, channel.id)}>
                       Remove
                     </Dropdown.Item>
                   </Dropdown.Menu>

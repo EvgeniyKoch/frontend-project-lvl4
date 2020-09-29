@@ -1,6 +1,9 @@
-// @ts-check
+const path = require('path');
+const webpack = require('webpack');
+const dotenv = require('dotenv').config({
+  path: path.join(__dirname, '.env'),
+});
 
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const isProduction = process.env.NODE_ENV === 'production';
 // const isDevelopment = !isProduction;
 console.log('isProduction', isProduction);
@@ -21,7 +24,7 @@ module.exports = {
     publicPath: '/assets/',
   },
   plugins: [
-    // new MiniCssExtractPlugin(),
+    new webpack.EnvironmentPlugin(['ROLLBAR_KEY']),
   ],
   module: {
     rules: [
