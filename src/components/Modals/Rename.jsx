@@ -32,8 +32,7 @@ const Rename = () => {
     validationSchema: validate(channels),
     onSubmit: async (values) => {
       const url = routes.channelPath(channelId);
-      const { name } = values;
-      const data = { data: { attributes: { channelId, name } } };
+      const data = { data: { attributes: { channelId, name: values.name } } };
       setLoading(true);
       try {
         await axios.patch(url, data);

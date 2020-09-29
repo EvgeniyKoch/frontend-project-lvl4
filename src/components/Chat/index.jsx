@@ -27,6 +27,7 @@ const Chat = () => {
     setLoading(true);
     try {
       await axios.post(url, data);
+      // eslint-disable-next-line no-use-before-define
       formik.resetForm();
     } catch (e) {
       console.log(e);
