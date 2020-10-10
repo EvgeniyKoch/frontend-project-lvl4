@@ -3,12 +3,10 @@ import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { actions } from '../../data/slice';
+import { actions } from '../../data/slices';
 import routes from '../../routes';
-import Context from '../../data/context';
 
 const Remove = () => {
-  const { rollbar } = React.useContext(Context);
   const [loading, setLoading] = React.useState(false);
   const { isOpen } = useSelector((state) => state.modal);
   const { channelId } = useSelector((state) => state.modal.extra);
@@ -27,7 +25,6 @@ const Remove = () => {
       await axios.delete(url, data);
     } catch (e) {
       console.log(e);
-      rollbar.error(e);
       dispatch(actions.showToast(true));
     } finally {
       setLoading(false);

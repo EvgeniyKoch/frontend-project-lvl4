@@ -2,14 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, ButtonGroup, Col, Dropdown, Row } from 'react-bootstrap';
 
-import { actions } from '../../data/slice';
-import { NEW_CHANNEL, REMOVE_CHANNEL, RENAME_CHANNEL } from '../../data/constants';
-
-import './style.scss';
+import { actions } from '../data/slices';
+import * as chat from '../data/constants';
 
 const Channels = () => {
-  const channels = useSelector(((state) => state.channels));
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const channels = useSelector(((state) => state.channelsData.channels));
+  const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
   const dispatch = useDispatch();
 
   const changeChannel = (channelId) => () => {
@@ -28,7 +26,7 @@ const Channels = () => {
       <Row className="channels-btn_add">
         <Col xs={8}>Channels</Col>
         <Col xs={4}>
-          <Button onClick={openModal(NEW_CHANNEL, null)} variant="link">
+          <Button onClick={openModal(chat.NEW_CHANNEL, null)} variant="link">
             +
           </Button>
         </Col>
@@ -42,7 +40,7 @@ const Channels = () => {
             <Col className="channels-links">
               {!channel.removable && (
                 <Button
-                  className="channels-btns"
+                  className="nav-link btn-block mb-2 text-left btn btn-primary"
                   onClick={changeChannel(channel.id)}
                   variant={variantBtn}
                 >
@@ -64,10 +62,10 @@ const Channels = () => {
                   </Button>
                   <Dropdown.Toggle className="channels-toggle" variant={variantBtn} />
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={openModal(RENAME_CHANNEL, channel.id)}>
+                    <Dropdown.Item onClick={openModal(chat.RENAME_CHANNEL, channel.id)}>
                       Rename
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={openModal(REMOVE_CHANNEL, channel.id)}>
+                    <Dropdown.Item onClick={openModal(chat.REMOVE_CHANNEL, channel.id)}>
                       Remove
                     </Dropdown.Item>
                   </Dropdown.Menu>

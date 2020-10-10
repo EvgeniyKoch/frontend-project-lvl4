@@ -3,7 +3,7 @@ import { Toast } from 'react-bootstrap';
 
 import './styles.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../data/slice';
+import { actions } from '../../data/slices';
 
 const Toaster = () => {
   const isOpen = useSelector((state) => state.toast.isOpen);

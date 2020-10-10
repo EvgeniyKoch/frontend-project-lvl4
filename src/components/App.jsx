@@ -1,14 +1,17 @@
 import React from 'react';
 
-import Channels from './Channels';
-import Content from './Content';
-import Chat from './Chat';
+import Content from './Content.jsx';
+import Chat from './Chat.jsx';
+import ErrorBoundary from './ErrorBoundary';
+import Channels from './Channels.jsx';
 
 const App = () => (
-  <Content>
-    <Channels />
-    <Chat />
-  </Content>
+  <ErrorBoundary>
+    <Content>
+      <Channels />
+      <Chat />
+    </Content>
+  </ErrorBoundary>
 );
 
 export default App;

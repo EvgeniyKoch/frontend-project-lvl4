@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
-import { getColors, titleInitials } from '../Chat/utils';
+import { getColors, titleInitials } from '../data/utils';
 
 const Messages = ({ currentChannelId }) => {
-  const messages = useSelector((state) => state.messages);
+  const messages = useSelector(({ messagesData }) => messagesData.messages);
+  const currentChannelMessages = useSelector(({ messagesData }) => (
+    messagesData.messages.filter((m) => m.channelId === currentChannelId)));
   const endMessage = React.useRef(null);
-
-  const currentChannelMessages = messages.filter((message) => message.channelId === currentChannelId);
 
   const scrollToBottom = () => {
     endMessage.current.scrollIntoView();
@@ -46,4 +46,4 @@ const Messages = ({ currentChannelId }) => {
   );
 };
 
-export default React.memo(Messages);
+export default Messages;

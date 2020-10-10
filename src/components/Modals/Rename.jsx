@@ -5,17 +5,15 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 
 import validate from './validator';
-import { actions } from '../../data/slice';
+import { actions } from '../../data/slices';
 import routes from '../../routes';
-import Context from '../../data/context';
 
 const Rename = () => {
-  const { rollbar } = React.useContext(Context);
   const [loading, setLoading] = React.useState(false);
-  const { isOpen } = useSelector((state) => state.modal);
-  const { channels } = useSelector((state) => state);
-  const { channelId } = useSelector((state) => state.modal.extra);
-  const { name } = useSelector((state) => state.channels.find((c) => c.id === channelId));
+  const isOpen = useSelector((state) => state.modal.isOpen);
+  const channels = useSelector((state) => state.channelsData.channels);
+  const channelId = useSelector((state) => state.modal.extra.channelId);
+  const { name } = useSelector((state) => state.channelsData.channels.find((c) => c.id === channelId));
   const dispatch = useDispatch();
   const textInput = React.useRef();
 
@@ -38,7 +36,6 @@ const Rename = () => {
         await axios.patch(url, data);
       } catch (e) {
         console.log(e);
-        rollbar.error(e);
         dispatch(actions.showToast(true));
       } finally {
         setLoading(false);

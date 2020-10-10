@@ -4,17 +4,15 @@ import { Row, Col, Form, FormGroup, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import axios from 'axios';
 
-import Context from '../../data/context';
-import Messages from '../Messages';
-import routes from '../../routes';
-import { actions } from '../../data/slice';
-
-import './styles.scss';
+import Context from '../data/context';
+import Messages from './Messages.jsx';
+import routes from '../routes';
+import { actions } from '../data/slices';
 
 const Chat = () => {
   const [loading, setLoading] = React.useState(false);
-  const currentChannelId = useSelector((state) => state.currentChannelId);
-  const { username, rollbar } = useContext(Context);
+  const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
+  const { username } = useContext(Context);
   const dispatch = useDispatch();
   const textInput = React.useRef();
 
@@ -31,7 +29,6 @@ const Chat = () => {
       formik.resetForm();
     } catch (e) {
       console.log(e);
-      rollbar.error(e);
       dispatch(actions.showToast(true));
     } finally {
       setLoading(false);

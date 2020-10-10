@@ -4,16 +4,14 @@ import { Button, Form, FormGroup, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import axios from 'axios';
 
-import { actions } from '../../data/slice';
+import { actions } from '../../data/slices';
 import routes from '../../routes';
 import validate from './validator';
-import Context from '../../data/context';
 
 const Create = () => {
-  const { rollbar } = React.useContext(Context);
   const [loading, setLoading] = React.useState(false);
-  const { isOpen } = useSelector((state) => state.modal);
-  const { channels } = useSelector((state) => state);
+  const isOpen = useSelector((state) => state.modal.isOpen);
+  const channels = useSelector((state) => state.channelsData.channels);
   const dispatch = useDispatch();
   const textInput = React.useRef();
 
@@ -37,7 +35,6 @@ const Create = () => {
         await axios.post(url, data);
       } catch (e) {
         console.log(e);
-        rollbar.error(e);
         dispatch(actions.showToast(true));
       } finally {
         setLoading(false);

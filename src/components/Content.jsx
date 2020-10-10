@@ -1,11 +1,9 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Create, Rename, Remove } from '../Modals';
-import Toaster from '../Toast';
-import { NEW_CHANNEL, RENAME_CHANNEL, REMOVE_CHANNEL } from '../../data/constants';
-
-import './styles.scss';
+import { Create, Rename, Remove } from './Modals';
+import Toaster from './Toast';
+import { NEW_CHANNEL, RENAME_CHANNEL, REMOVE_CHANNEL } from '../data/constants';
 
 const selectModal = {
   [NEW_CHANNEL]: Create,
@@ -16,7 +14,7 @@ const selectModal = {
 const Content = ({ children }) => {
   const { type, isOpen } = useSelector((state) => state.modal);
   const [channel, chat] = children;
-  const Modal = selectModal[type];
+  const Modal = selectModal[type] || Create;
 
   return (
     <>
