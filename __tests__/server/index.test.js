@@ -1,4 +1,4 @@
-import buildApp from '../server';
+import buildApp from '../../server';
 
 test('get /', async () => {
   const app = buildApp({ port: 5000 });

@@ -3,12 +3,11 @@ import { Col, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Create, Rename, Remove } from './Modals';
 import Toaster from './Toast';
-import { NEW_CHANNEL, RENAME_CHANNEL, REMOVE_CHANNEL } from '../data/constants';
 
 const selectModal = {
-  [NEW_CHANNEL]: Create,
-  [RENAME_CHANNEL]: Rename,
-  [REMOVE_CHANNEL]: Remove,
+  newChannel: Create,
+  renameChannel: Rename,
+  removeChannel: Remove,
 };
 
 const Content = ({ children }) => {

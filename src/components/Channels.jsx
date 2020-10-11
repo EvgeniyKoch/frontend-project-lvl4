@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, ButtonGroup, Col, Dropdown, Row } from 'react-bootstrap';
 
 import { actions } from '../data/slices';
-import * as chat from '../data/constants';
 
 const Channels = () => {
   const channels = useSelector(((state) => state.channelsData.channels));
@@ -26,7 +25,11 @@ const Channels = () => {
       <Row className="channels-btn_add">
         <Col xs={8}>Channels</Col>
         <Col xs={4}>
-          <Button onClick={openModal(chat.NEW_CHANNEL, null)} variant="link">
+          <Button
+            onClick={openModal('newChannel', null)}
+            aria-label="create"
+            variant="link"
+          >
             +
           </Button>
         </Col>
@@ -43,6 +46,7 @@ const Channels = () => {
                   className="nav-link btn-block mb-2 text-left btn btn-primary"
                   onClick={changeChannel(channel.id)}
                   variant={variantBtn}
+                  aria-label={`${channel.name}`}
                 >
                   {channel.name}
                 </Button>
@@ -60,12 +64,12 @@ const Channels = () => {
                   >
                     {channel.name}
                   </Button>
-                  <Dropdown.Toggle className="channels-toggle" variant={variantBtn} />
+                  <Dropdown.Toggle className="channels-toggle" aria-label="toggle" variant={variantBtn} />
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={openModal(chat.RENAME_CHANNEL, channel.id)}>
+                    <Dropdown.Item onClick={openModal('renameChannel', channel.id)}>
                       Rename
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={openModal(chat.REMOVE_CHANNEL, channel.id)}>
+                    <Dropdown.Item onClick={openModal('removeChannel', channel.id)}>
                       Remove
                     </Dropdown.Item>
                   </Dropdown.Menu>

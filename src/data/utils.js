@@ -7,7 +7,6 @@ export const titleInitials = (title) => {
       .slice(0, 2)
       .join('');
   } catch (e) {
-    console.warn(e);
     return '🐶';
   }
 };
@@ -20,12 +19,20 @@ const defaultColours = [
   '#f3af67',
 ];
 
-export const getColors = (name) => {
+export const getColors = (name = '') => {
+  const str = name.split(' ').join('');
   try {
-    const colorInx = Math.round(name.length / defaultColours.length);
+    const colorInx = Math.round(str.length / defaultColours.length);
     return defaultColours[colorInx];
   } catch (e) {
-    console.warn(e);
     return '#67d8f3';
+  }
+};
+
+export const deserialize = (value) => {
+  try {
+    return JSON.parse(value);
+  } catch (e) {
+    return value;
   }
 };

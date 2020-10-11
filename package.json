@@ -17,6 +17,11 @@
     "start": "dist/bin/slack.js",
     "postinstall": "npm run build"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
@@ -84,6 +89,9 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.4",
+    "@testing-library/user-event": "^12.1.7",
     "@types/jest": "^26.0.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
@@ -102,6 +110,9 @@
     "jest": "^26.1.0",
     "jest-cli": "^26.1.0",
     "jsdoc": "^3.6.5",
+    "mock-socket": "^9.0.3",
+    "nanodelay": "^1.0.3",
+    "nock": "^13.0.4",
     "nodemon": "^2.0.4"
   }
 }

@@ -60,6 +60,7 @@ const Create = () => {
               type="text"
               value={values.name}
               onChange={handleChange}
+              aria-label="name"
             />
             {errors.name && touched.name && (
               <Form.Control.Feedback className="d-block mb-2" type="invalid">
@@ -69,8 +70,15 @@ const Create = () => {
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={closeModal} variant="secondary">Close</Button>
-          <Button disabled={loading} variant="primary" type="submit">Save channel</Button>
+          <Button onClick={closeModal} variant="secondary">Cancel</Button>
+          <Button
+            disabled={loading}
+            aria-label="save channel"
+            variant="primary"
+            type="submit"
+          >
+            Save channel
+          </Button>
         </Modal.Footer>
       </form>
     </Modal>

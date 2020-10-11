@@ -8,7 +8,7 @@ import Rollbar from 'rollbar';
 import App from './components/App';
 import Context from './data/context';
 import reducer, { actions } from './data/slices';
-import * as listener from './data/constants';
+import { deserialize } from './data/utils';
 
 import './styles.scss';
 
@@ -41,16 +41,20 @@ export default (socket, { currentChannelId, channels, messages }) => {
     </Context.Provider>
   );
 
-  socket.on(listener.NEW_MESSAGE, ({ data: { attributes } }) => {
+  socket.on('newMessage', (payload) => {
+    const { data: { attributes } } = deserialize(payload);
     store.dispatch(actions.addMessage(attributes));
   });
-  socket.on(listener.NEW_CHANNEL, ({ data: { attributes } }) => {
+  socket.on('newChannel', (payload) => {
+    const { data: { attributes } } = deserialize(payload);
     store.dispatch(actions.addChannel(attributes));
   });
-  socket.on(listener.RENAME_CHANNEL, ({ data: { attributes } }) => {
+  socket.on('renameChannel', (payload) => {
+    const { data: { attributes } } = deserialize(payload);
     store.dispatch(actions.renameChannel(attributes));
   });
-  socket.on(listener.REMOVE_CHANNEL, ({ data }) => {
+  socket.on('removeChannel', (payload) => {
+    const { data } = deserialize(payload);
     store.dispatch(actions.removeChannel(data));
   });
 

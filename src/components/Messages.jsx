@@ -14,7 +14,7 @@ const Messages = ({ currentChannelId }) => {
     endMessage.current.scrollIntoView();
   };
 
-  React.useEffect(scrollToBottom, [messages]);
+  React.useEffect(scrollToBottom, [messages.length]);
 
   return (
     <Row>

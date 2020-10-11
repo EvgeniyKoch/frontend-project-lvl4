@@ -42,8 +42,8 @@ const Remove = () => {
           Are you sure?
         </Modal.Body>
         <Modal.Footer className="modal-footer">
-          <Button disabled={loading} onClick={closeModal} variant="secondary">Cancel</Button>
-          <Button disabled={loading} variant="primary" type="submit">Remove</Button>
+          <Button arial-label="cancel" disabled={loading} onClick={closeModal} variant="secondary">Cancel</Button>
+          <Button disabled={loading} arial-label="remove" variant="primary" type="submit">Remove</Button>
         </Modal.Footer>
       </form>
     </Modal>

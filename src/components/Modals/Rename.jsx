@@ -57,6 +57,7 @@ const Rename = () => {
             <Form.Control
               isInvalid={!isValid}
               ref={textInput}
+              aria-label="name"
               name="name"
               type="text"
               value={values.name}
@@ -70,7 +71,7 @@ const Rename = () => {
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button disabled={loading} onClick={closeModal} variant="secondary">Close</Button>
+          <Button disabled={loading} onClick={closeModal} variant="secondary">Cancel</Button>
           <Button disabled={loading} variant="primary" type="submit">Save name</Button>
         </Modal.Footer>
       </form>

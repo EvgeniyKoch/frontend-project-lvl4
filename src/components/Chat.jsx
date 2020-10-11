@@ -56,6 +56,8 @@ const Chat = () => {
     },
   });
 
+  const { values, handleChange } = formik;
+
   return (
     <>
       <Messages currentChannelId={currentChannelId} />
@@ -69,14 +71,17 @@ const Chat = () => {
                     ref={textInput}
                     name="message"
                     type="text"
-                    value={formik.values.message}
-                    onChange={formik.handleChange}
+                    aria-label="message"
+                    value={values.message}
+                    onChange={handleChange}
                     placeholder="Enter a message"
                   />
                 </FormGroup>
               </Col>
               <Col xs={3}>
-                <Button disabled={loading} type="submit">Send</Button>
+                <Button aria-label="submit" name="submit" disabled={loading} type="submit">
+                  Send
+                </Button>
               </Col>
             </Row>
           </form>
