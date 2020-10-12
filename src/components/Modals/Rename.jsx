@@ -9,7 +9,6 @@ import { actions } from '../../data/slices';
 import routes from '../../routes';
 
 const Rename = () => {
-  const [loading, setLoading] = React.useState(false);
   const isOpen = useSelector((state) => state.modal.isOpen);
   const channels = useSelector((state) => state.channelsData.channels);
   const channelId = useSelector((state) => state.modal.extra.channelId);
@@ -31,20 +30,18 @@ const Rename = () => {
     onSubmit: async (values) => {
       const url = routes.channelPath(channelId);
       const data = { data: { attributes: { channelId, name: values.name } } };
-      setLoading(true);
       try {
         await axios.patch(url, data);
       } catch (e) {
         console.log(e);
         dispatch(actions.showToast(true));
       } finally {
-        setLoading(false);
         closeModal();
       }
     },
   });
 
-  const { isValid, values, handleSubmit, handleChange, errors, touched } = formik;
+  const { isValid, isSubmitting, values, handleSubmit, handleChange, errors, touched } = formik;
 
   return (
     <Modal show={isOpen} onHide={closeModal}>
@@ -71,8 +68,8 @@ const Rename = () => {
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button disabled={loading} onClick={closeModal} variant="secondary">Cancel</Button>
-          <Button disabled={loading} variant="primary" type="submit">Save name</Button>
+          <Button disabled={isSubmitting} onClick={closeModal} variant="secondary">Cancel</Button>
+          <Button disabled={isSubmitting} variant="primary" type="submit">Save name</Button>
         </Modal.Footer>
       </form>
     </Modal>

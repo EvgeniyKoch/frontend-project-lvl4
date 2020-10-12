@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import useErrorBoundary from 'use-error-boundary';
-import Context from '../data/context';
+import EntityContext from '../data/context';
 
 export default ({ children }) => {
-  const { logTracking } = React.useContext(Context);
+  const { logTracking } = React.useContext(EntityContext);
   const { ErrorBoundary, didCatch, error } = useErrorBoundary({
     onDidCatch: (err, errorInfo) => {
       logTracking.error(err);

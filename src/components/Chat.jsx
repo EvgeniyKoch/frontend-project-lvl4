@@ -4,15 +4,14 @@ import { Row, Col, Form, FormGroup, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import axios from 'axios';
 
-import Context from '../data/context';
+import EntityContext from '../data/context';
 import Messages from './Messages.jsx';
 import routes from '../routes';
 import { actions } from '../data/slices';
 
 const Chat = () => {
-  const [loading, setLoading] = React.useState(false);
   const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
-  const { username } = useContext(Context);
+  const { username } = useContext(EntityContext);
   const dispatch = useDispatch();
   const textInput = React.useRef();
 
@@ -22,7 +21,6 @@ const Chat = () => {
 
   const handleSubmit = async (data) => {
     const url = routes.channelMessagesPath(data.data.attributes.channelId);
-    setLoading(true);
     try {
       await axios.post(url, data);
       // eslint-disable-next-line no-use-before-define
@@ -30,8 +28,6 @@ const Chat = () => {
     } catch (e) {
       console.log(e);
       dispatch(actions.showToast(true));
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -56,7 +52,7 @@ const Chat = () => {
     },
   });
 
-  const { values, handleChange } = formik;
+  const { values, handleChange, isSubmitting } = formik;
 
   return (
     <>
@@ -79,7 +75,7 @@ const Chat = () => {
                 </FormGroup>
               </Col>
               <Col xs={3}>
-                <Button aria-label="submit" name="submit" disabled={loading} type="submit">
+                <Button aria-label="submit" name="submit" disabled={isSubmitting} type="submit">
                   Send
                 </Button>
               </Col>

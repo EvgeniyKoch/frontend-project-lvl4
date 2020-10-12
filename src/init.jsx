@@ -6,7 +6,7 @@ import faker from 'faker';
 import Rollbar from 'rollbar';
 
 import App from './components/App';
-import Context from './data/context';
+import EntityContext from './data/context';
 import reducer, { actions } from './data/slices';
 import { deserialize } from './data/utils';
 
@@ -34,11 +34,11 @@ export default (socket, { currentChannelId, channels, messages }) => {
   cookies.set('username', username);
 
   const dom = (
-    <Context.Provider value={{ username, logTracking }}>
+    <EntityContext.Provider value={{ username, logTracking }}>
       <Provider store={store}>
         <App />
       </Provider>
-    </Context.Provider>
+    </EntityContext.Provider>
   );
 
   socket.on('newMessage', (payload) => {

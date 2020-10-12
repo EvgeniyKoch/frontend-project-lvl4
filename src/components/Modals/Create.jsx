@@ -9,7 +9,6 @@ import routes from '../../routes';
 import validate from './validator';
 
 const Create = () => {
-  const [loading, setLoading] = React.useState(false);
   const isOpen = useSelector((state) => state.modal.isOpen);
   const channels = useSelector((state) => state.channelsData.channels);
   const dispatch = useDispatch();
@@ -30,20 +29,18 @@ const Create = () => {
       const url = routes.channelsPath();
       const { name } = values;
       const data = { data: { attributes: { name } } };
-      setLoading(true);
       try {
         await axios.post(url, data);
       } catch (e) {
         console.log(e);
         dispatch(actions.showToast(true));
       } finally {
-        setLoading(false);
         closeModal();
       }
     },
   });
 
-  const { isValid, values, handleSubmit, handleChange, errors, touched } = formik;
+  const { isValid, isSubmitting, values, handleSubmit, handleChange, errors, touched } = formik;
 
   return (
     <Modal show={isOpen} onHide={closeModal}>
@@ -72,7 +69,7 @@ const Create = () => {
         <Modal.Footer>
           <Button onClick={closeModal} variant="secondary">Cancel</Button>
           <Button
-            disabled={loading}
+            disabled={isSubmitting}
             aria-label="save channel"
             variant="primary"
             type="submit"
