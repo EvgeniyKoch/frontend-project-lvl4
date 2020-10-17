@@ -11,13 +11,7 @@ export const titleInitials = (title) => {
   }
 };
 
-const defaultColours = [
-  '#247BA0',
-  '#70C1B3',
-  '#CBB1DB',
-  '#67d8f3',
-  '#f3af67',
-];
+const defaultColours = ['#247BA0', '#70C1B3', '#CBB1DB', '#67d8f3', '#f3af67'];
 
 export const getColors = (name = '') => {
   const str = name.split(' ').join('');
