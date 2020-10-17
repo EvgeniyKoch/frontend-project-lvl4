@@ -24,8 +24,15 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "./src/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write",
+      "eslint src/*.js --fix-dry-run"
+    ]
   },
   "repository": {
     "type": "git",
@@ -110,9 +117,11 @@
     "jest": "^26.1.0",
     "jest-cli": "^26.1.0",
     "jsdoc": "^3.6.5",
+    "lint-staged": "^10.4.2",
     "mock-socket": "^9.0.3",
     "nanodelay": "^1.0.3",
     "nock": "^13.0.4",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.2"
   }
 }
