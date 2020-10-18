@@ -6,7 +6,8 @@ import { getColors, titleInitials } from '../data/utils';
 
 const Messages = ({ currentChannelId }) => {
   const messages = useSelector(({ messagesData }) => messagesData.messages);
-  const currentChannelMessages = useSelector(({ messagesData }) => messagesData.messages.filter((m) => m.channelId === currentChannelId));
+  const currentChannelMessages = useSelector(({ messagesData }) => (
+    messagesData.messages.filter((m) => m.channelId === currentChannelId)));
   const endMessage = React.useRef(null);
 
   const scrollToBottom = () => {
