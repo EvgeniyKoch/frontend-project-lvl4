@@ -31,5 +31,5 @@ rules:
   functional/functional-parameters: 0
   functional/no-try-statement: 0
   functional/no-throw-statement: 0
-  max-len: ["error", { "code": 140, "ignoreStrings": true }]
+  max-len: ["error", { "code": 120, "ignoreStrings": true }]
   object-curly-newline: ["error",{ "ImportDeclaration": "never", "ExportDeclaration": "never" }]
