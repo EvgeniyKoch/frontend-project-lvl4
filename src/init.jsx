@@ -10,8 +10,6 @@ import EntityContext from './data/context';
 import reducer, { actions } from './data/slices';
 import { deserialize } from './data/utils';
 
-import './styles.scss';
-
 export default (socket, { currentChannelId, channels, messages }) => {
   const logTracking = new Rollbar({
     accessToken: process.env.ROLLBAR_KEY,
@@ -42,15 +40,21 @@ export default (socket, { currentChannelId, channels, messages }) => {
   );
 
   socket.on('newMessage', (payload) => {
-    const { data: { attributes } } = deserialize(payload);
+    const {
+      data: { attributes },
+    } = deserialize(payload);
     store.dispatch(actions.addMessage(attributes));
   });
   socket.on('newChannel', (payload) => {
-    const { data: { attributes } } = deserialize(payload);
+    const {
+      data: { attributes },
+    } = deserialize(payload);
     store.dispatch(actions.addChannel(attributes));
   });
   socket.on('renameChannel', (payload) => {
-    const { data: { attributes } } = deserialize(payload);
+    const {
+      data: { attributes },
+    } = deserialize(payload);
     store.dispatch(actions.renameChannel(attributes));
   });
   socket.on('removeChannel', (payload) => {

@@ -16,18 +16,16 @@ const Content = ({ children }) => {
   const Modal = selectModal[type] || Create;
 
   return (
-    <>
+    <div className="h-100">
       {isOpen && <Modal />}
       <Toaster />
-      <Row>
-        <Col xs={3}>
-          {channel}
-        </Col>
-        <Col className="chat" xs={9}>
+      <Row className="h-100">
+        <Col xs={3}>{channel}</Col>
+        <Col className="h-100" xs={9}>
           {chat}
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 

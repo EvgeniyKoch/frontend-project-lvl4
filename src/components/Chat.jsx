@@ -10,7 +10,9 @@ import routes from '../routes';
 import { actions } from '../data/slices';
 
 const Chat = () => {
-  const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
+  const currentChannelId = useSelector(
+    (state) => state.channelsData.currentChannelId,
+  );
   const { username } = useContext(EntityContext);
   const dispatch = useDispatch();
   const textInput = React.useRef();
@@ -37,6 +39,7 @@ const Chat = () => {
       const { message } = values;
 
       if (message.length === 0) {
+        formik.setSubmitting(false);
         return;
       }
 
@@ -58,7 +61,7 @@ const Chat = () => {
     <>
       <Messages currentChannelId={currentChannelId} />
       <Row>
-        <Col className="chat-form">
+        <Col>
           <form onSubmit={formik.handleSubmit}>
             <Row>
               <Col xs={9}>
@@ -75,7 +78,12 @@ const Chat = () => {
                 </FormGroup>
               </Col>
               <Col xs={3}>
-                <Button aria-label="submit" name="submit" disabled={isSubmitting} type="submit">
+                <Button
+                  aria-label="submit"
+                  name="submit"
+                  disabled={isSubmitting}
+                  type="submit"
+                >
                   Send
                 </Button>
               </Col>

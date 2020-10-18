@@ -38,12 +38,24 @@ const Remove = () => {
         <Modal.Header closeButton>
           <Modal.Title>Remove channel</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Are you sure?
-        </Modal.Body>
-        <Modal.Footer className="modal-footer">
-          <Button arial-label="cancel" disabled={loading} onClick={closeModal} variant="secondary">Cancel</Button>
-          <Button disabled={loading} arial-label="remove" variant="primary" type="submit">Remove</Button>
+        <Modal.Body>Are you sure?</Modal.Body>
+        <Modal.Footer className="d-flex justify-content-between">
+          <Button
+            arial-label="cancel"
+            disabled={loading}
+            onClick={closeModal}
+            variant="secondary"
+          >
+            Cancel
+          </Button>
+          <Button
+            disabled={loading}
+            arial-label="remove"
+            variant="primary"
+            type="submit"
+          >
+            Remove
+          </Button>
         </Modal.Footer>
       </form>
     </Modal>

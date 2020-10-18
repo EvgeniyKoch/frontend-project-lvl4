@@ -6,8 +6,7 @@ import { getColors, titleInitials } from '../data/utils';
 
 const Messages = ({ currentChannelId }) => {
   const messages = useSelector(({ messagesData }) => messagesData.messages);
-  const currentChannelMessages = useSelector(({ messagesData }) => (
-    messagesData.messages.filter((m) => m.channelId === currentChannelId)));
+  const currentChannelMessages = useSelector(({ messagesData }) => messagesData.messages.filter((m) => m.channelId === currentChannelId));
   const endMessage = React.useRef(null);
 
   const scrollToBottom = () => {
@@ -17,21 +16,24 @@ const Messages = ({ currentChannelId }) => {
   React.useEffect(scrollToBottom, [messages.length]);
 
   return (
-    <Row>
-      <Col className="chat-messages">
+    <Row className="h-75 border-left border-light">
+      <Col>
         {currentChannelMessages.map(({ username, message, id }) => (
           <Row key={id}>
-            <div
-              className="message-wrapper"
-            >
+            <div className="d-flex">
               <div
-                style={{ backgroundColor: getColors(username), borderRadius: '50%' }}
-                className="message-name"
+                style={{
+                  backgroundColor: getColors(username),
+                  width: '40px',
+                  height: '40px',
+                  margin: '0 10px',
+                }}
+                className="d-flex justify-content-center align-items-center rounded-circle"
               >
                 {titleInitials(username)}
               </div>
               <div>
-                <p style={{ color: getColors(username) }}>
+                <p style={{ color: getColors(username) }} className="m-0">
                   {username}
                   :
                 </p>

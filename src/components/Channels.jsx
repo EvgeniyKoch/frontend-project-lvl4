@@ -5,8 +5,10 @@ import { Button, ButtonGroup, Col, Dropdown, Row } from 'react-bootstrap';
 import { actions } from '../data/slices';
 
 const Channels = () => {
-  const channels = useSelector(((state) => state.channelsData.channels));
-  const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
+  const channels = useSelector((state) => state.channelsData.channels);
+  const currentChannelId = useSelector(
+    (state) => state.channelsData.currentChannelId,
+  );
   const dispatch = useDispatch();
 
   const changeChannel = (channelId) => () => {
@@ -14,15 +16,17 @@ const Channels = () => {
   };
 
   const openModal = (type, channelId) => () => {
-    dispatch(actions.openModal({
-      type,
-      data: { channelId },
-    }));
+    dispatch(
+      actions.openModal({
+        type,
+        data: { channelId },
+      }),
+    );
   };
 
   return (
-    <div className="channels">
-      <Row className="channels-btn_add">
+    <>
+      <Row className="d-flex align-items-center">
         <Col xs={8}>Channels</Col>
         <Col xs={4}>
           <Button
@@ -40,7 +44,7 @@ const Channels = () => {
 
         return (
           <Row key={channel.id}>
-            <Col className="channels-links">
+            <Col>
               {!channel.removable && (
                 <Button
                   className="nav-link btn-block mb-2 text-left btn btn-primary"
@@ -52,24 +56,23 @@ const Channels = () => {
                 </Button>
               )}
               {channel.removable && (
-                <Dropdown
-                  className="channels-dropdown"
-                  key={channel.id}
-                  as={ButtonGroup}
-                >
+                <Dropdown key={channel.id} as={ButtonGroup}>
                   <Button
-                    className="channels-btns"
                     onClick={changeChannel(channel.id)}
                     variant={variantBtn}
                   >
                     {channel.name}
                   </Button>
-                  <Dropdown.Toggle className="channels-toggle" aria-label="toggle" variant={variantBtn} />
+                  <Dropdown.Toggle aria-label="toggle" variant={variantBtn} />
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={openModal('renameChannel', channel.id)}>
+                    <Dropdown.Item
+                      onClick={openModal('renameChannel', channel.id)}
+                    >
                       Rename
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={openModal('removeChannel', channel.id)}>
+                    <Dropdown.Item
+                      onClick={openModal('removeChannel', channel.id)}
+                    >
                       Remove
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -79,7 +82,7 @@ const Channels = () => {
           </Row>
         );
       })}
-    </div>
+    </>
   );
 };
 
